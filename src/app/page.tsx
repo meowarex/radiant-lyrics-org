@@ -24,6 +24,7 @@ import { FeatureGrid, StatsRow, StepList } from "@/components/Panels";
 import { ScreenshotSwitcher } from "@/components/ScreenshotSwitcher";
 import { Section, SectionEyebrow, SectionHeading, SectionLead } from "@/components/Section";
 import { Segmented } from "@/components/Segmented";
+import { useIsMobile } from "@/components/useIsMobile";
 import {
   desktopFeatures,
   desktopSteps,
@@ -45,6 +46,8 @@ const SWAP_LIFT = 0.4;
 
 export default function HomePage() {
   const [platform, setPlatform] = useState("desktop");
+
+  const isMobileDevice = useIsMobile();
 
   /*
    * Open on the tab that matches the device platform <3
@@ -146,25 +149,26 @@ export default function HomePage() {
             {/* Android leads and takes the brand fill (mobile friendly) */}
             <Row gap="12" wrap horizontal="center" marginTop="40">
               <Button
-                href={links.mobileReleases}
+                href={isMobileDevice ? links.mobileReleases : links.desktopRepo}
                 size="l"
+                variant="primary"
                 data-border="rounded"
                 weight="default"
-                prefixIcon="android"
+                prefixIcon={isMobileDevice ? "android" : "desktop"}
                 arrowIcon
               >
-                Get it for Android
+                {isMobileDevice ? "Get it for Android" : "Get it for Desktop"}
               </Button>
               <Button
-                href={links.desktopRepo}
+                href={isMobileDevice ? links.desktopRepo : links.mobileReleases}
                 size="l"
                 variant="secondary"
                 data-border="rounded"
                 weight="default"
-                prefixIcon="desktop"
+                prefixIcon={isMobileDevice ? "desktop" : "android"}
                 arrowIcon
               >
-                Get it for Desktop
+                {isMobileDevice ? "Get it for Desktop" : "Get it for Android"}
               </Button>
             </Row>
           </RevealFx>
