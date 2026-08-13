@@ -69,25 +69,20 @@ export const Header = () => {
             selected={false}
             aria-label={`Go to ${site.parent.label}`}
           />
-          {/*
-            Shrink the Feature Pill (mobile friendly)
-          */}
           <Line
             background="neutral-alpha-medium"
             vert
             maxHeight="24"
-            className={`${styles.divider} ${scrolled ? styles.dividerVisible : ""} s-flex-hide`}
+            className={`${styles.divider} ${scrolled ? styles.dividerVisible : ""}`}
           />
-          <Flex gap="4" vertical="center" className="s-flex-hide">
-            {navLinks.map((link) => (
-              <ToggleButton
-                key={link.href}
-                href={link.href}
-                label={link.label}
-                selected={active === link.href.replace("#", "")}
-              />
-            ))}
-          </Flex>
+          {navLinks.map((link) => (
+            <ToggleButton
+              key={link.href}
+              href={link.href}
+              label={link.label}
+              selected={active === link.href.replace("#", "")}
+            />
+          ))}
           <Line
             background="neutral-alpha-medium"
             vert

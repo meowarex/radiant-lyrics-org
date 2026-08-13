@@ -6,7 +6,7 @@ export const RADIANT = "#9966cc";
 
 export const site = {
   name: "Radiant Lyrics",
-  tagline: "A radiant lyrics experience for TIDAL",
+  tagline: "",
   parent: { label: "atomix.one", href: "https://atomix.one" },
 };
 

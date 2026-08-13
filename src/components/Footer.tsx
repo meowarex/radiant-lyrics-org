@@ -59,7 +59,7 @@ export const Footer = () => {
               onBackground="neutral-weak"
               style={{ maxWidth: "22rem" }}
             >
-              {site.tagline}. Built on TidaLuna by Inrixia, inspired by beautiful-lyrics from
+              Built on TidaLuna by Inrixia, inspired by beautiful-lyrics from
               surfbryce.
             </Text>
           </Column>

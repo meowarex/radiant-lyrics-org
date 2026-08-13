@@ -38,8 +38,8 @@
 
 @media (max-width: 768px) {
 	.hero.hero {
-		padding-top: var(--static-space-104);
-		/* Matches a section's 60px so the hero-to-stats gap is the same 120px */
+		/* Removed Header so use the spaace (mobile friendly) */
+		padding-top: var(--static-space-64);
 		padding-bottom: 60px;
 		padding-inline: var(--static-space-16);
 	}
