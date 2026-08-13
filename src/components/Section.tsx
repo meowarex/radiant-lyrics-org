@@ -2,6 +2,8 @@ import { Column, Heading, Line, Row, Text } from "@once-ui-system/core";
 import type { SpacingToken } from "@once-ui-system/core";
 import type { ReactNode } from "react";
 
+import styles from "./Section.module.scss";
+
 /**
  * Terax's section rhythm: a mono eyebrow, a tight display heading, then a lead
  * paragraph capped well short of the container so it stays readable.
@@ -18,11 +20,11 @@ export function Section({
   return (
     <Column
       id={id}
+      className={styles.section}
       fillWidth
       horizontal="center"
       paddingX="24"
       paddingY={paddingY}
-      s={{ paddingY: "80" }}
     >
       <Column maxWidth="l" fillWidth gap="0">
         {children}

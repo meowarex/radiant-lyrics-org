@@ -7,6 +7,15 @@
 }
 
 /*
+ * Gone entirely (mobile friendly)
+ */
+@media (max-width: 768px) {
+	.header {
+		display: none;
+	}
+}
+
+/*
  * atomix.one's compact pill — small, only lightly rounded — but transparent until
  * you scroll, so it floats over the hero instead of sitting in a slab.
  */

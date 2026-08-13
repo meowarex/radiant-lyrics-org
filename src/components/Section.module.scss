@@ -1,0 +1,20 @@
+/*
+ * Responsive spacing has to live here, not in props (mobile friendly)
+ */
+@media (max-width: 1024px) {
+	.section.section {
+		padding-block: var(--static-space-72);
+	}
+}
+
+/*
+ * Literal 60px rather than a spacing token: two adjacent sections then sit exactly
+ * 120px apart. The tokens are multiplied by data-scaling (110%), so token 56 would
+ * land at ~123px — close, but not the number that was asked for.
+ */
+@media (max-width: 768px) {
+	.section.section {
+		padding-block: 60px;
+		padding-inline: var(--static-space-16);
+	}
+}

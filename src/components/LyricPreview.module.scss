@@ -301,10 +301,41 @@
 @media (max-width: 768px) {
 	.lyricLine {
 		font-size: var(--font-size-heading-s);
+		/* lower width (mobile friendly) */
+		--line-shift: 8px;
 	}
 
 	.lyricStage {
 		min-height: 340px;
+		/* Adlibs are nowrap to hold their reserved height (mobile friendly) */
+		overflow-x: clip;
+	}
+
+	/* A 20% duet inset on each side leaves almost nothing for the lyric itself (mobile friendly) */
+	.stageDuet .singerLeft:not(.posHeld) {
+		padding-right: calc(8% + var(--line-shift));
+	}
+
+	.stageDuet .singerLeft.posHeld {
+		padding-right: 8%;
+	}
+
+	.stageDuet .singerRight:not(.posHeld) {
+		padding-left: calc(8% + var(--line-shift));
+	}
+
+	.stageDuet .singerRight.posHeld {
+		padding-left: 8%;
+	}
+}
+
+@media (max-width: 480px) {
+	.lyricLine {
+		font-size: var(--font-size-body-l);
+	}
+
+	.lyricStage {
+		min-height: 300px;
 	}
 }
 

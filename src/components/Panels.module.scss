@@ -10,7 +10,7 @@
 }
 
 .hairlineCell {
-	background: var(--page-background);
+	background: var(--hairline-cell-bg, var(--page-background));
 	transition: background 0.25s ease;
 }
 
@@ -24,6 +24,21 @@
 
 .featureIcon {
 	transition: color 0.25s ease;
+}
+
+/*
+ * Shrink to single column (mobile friendly)
+ */
+@media (max-width: 768px) {
+	.statValue {
+		font-size: var(--font-size-heading-m);
+		overflow-wrap: anywhere;
+	}
+
+	.statCell {
+		padding-inline: var(--static-space-12);
+		padding-block: var(--static-space-24);
+	}
 }
 
 .stepNumber {

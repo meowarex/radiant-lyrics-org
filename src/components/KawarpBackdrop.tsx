@@ -36,7 +36,16 @@ const KAWARP_OPTIONS = {
   saturation: DEFAULTS.saturation / 100,
   dithering: DEFAULTS.dithering / 1000,
   scale: DEFAULTS.scale / 100,
+};/**
+ * The plugin's performance mode (mobile friendly)
+ */
+const PERFORMANCE_OPTIONS = {
+  ...KAWARP_OPTIONS,
+  blurPasses: Math.min(KAWARP_OPTIONS.blurPasses, 4),
+  dithering: 0,
 };
+
+const MOBILE_QUERY = "(max-width: 768px)";
 
 /**
  * The cover art the shader renders from. Served locally, so no CORS to fight.
@@ -110,10 +119,11 @@ export const KawarpBackdrop = () => {
     let visible = true;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const isMobile = window.matchMedia(MOBILE_QUERY);
 
     const syncSize = () => {
-      // Performance mode is off by default, so DPR is capped at 2 like the plugin
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // Performance mode renders at 1x (mobile friendly)
+      const dpr = isMobile.matches ? 1 : Math.min(window.devicePixelRatio || 1, 2);
       const rect = host.getBoundingClientRect();
       const width = Math.max(1, Math.round(rect.width * dpr));
       const height = Math.max(1, Math.round(rect.height * dpr));
@@ -166,7 +176,7 @@ export const KawarpBackdrop = () => {
         if (disposed) return;
 
         syncSize();
-        engine = new Kawarp(canvas, KAWARP_OPTIONS);
+        engine = new Kawarp(canvas, isMobile.matches ? PERFORMANCE_OPTIONS : KAWARP_OPTIONS);
         canvas.style.opacity = String(DEFAULTS.opacity / 100);
 
         // Decode once and hand the bitmap over, the same way the plugin does

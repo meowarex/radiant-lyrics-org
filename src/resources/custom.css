@@ -16,6 +16,29 @@ strong {
   font-weight: 600;
 }
 
+/*
+ * Responsive types (mobile friendly)
+ */
+@media (max-width: 768px) {
+  :root {
+    --font-size-display-multiplier: 0.68;
+    --font-size-heading-multiplier: 0.88;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --font-size-display-multiplier: 0.5;
+    --font-size-heading-multiplier: 0.82;
+  }
+}
+
+/* Nothing should be able to push the page sideways on a phone */
+html,
+body {
+  overflow-x: clip;
+}
+
 /* Override global dropdown wrapper background */
 [data-dropdown-wrapper="true"] {
   background-color: var(--neutral-background-weak) !important;

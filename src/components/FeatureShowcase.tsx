@@ -4,6 +4,7 @@ import { Column, Flex, Heading, Icon, RevealFx, Row, Text } from "@once-ui-syste
 import type { ReactNode } from "react";
 
 import type { Showcase } from "@/resources";
+import styles from "./FeatureShowcase.module.scss";
 import { SectionEyebrow } from "./Section";
 
 /**
@@ -20,7 +21,7 @@ export function FeatureShowcase({
   reverse?: boolean;
 }) {
   const copy = (
-    <Flex flex={4} key="copy">
+    <Flex flex={4} key="copy" className={styles.copy}>
       <RevealFx fillWidth translateY={0.5}>
         <Column fillWidth gap="0">
           <SectionEyebrow index={showcase.index}>{showcase.eyebrow}</SectionEyebrow>
@@ -69,6 +70,7 @@ export function FeatureShowcase({
   return (
     <Row
       id={showcase.id}
+      className={styles.row}
       fillWidth
       gap="64"
       vertical="center"
