@@ -55,7 +55,7 @@ export function StatsRow({ stats }: { stats: Stat[] }) {
       {stats.map((stat) => (
         <Column
           key={stat.label}
-          className={styles.hairlineCell}
+          className={`${styles.hairlineCell} ${styles.statCell}`}
           paddingX="24"
           paddingY="32"
           horizontal="center"
@@ -86,7 +86,7 @@ export function StatsRow({ stats }: { stats: Stat[] }) {
                 effect="smooth"
                 variant="display-strong-xs"
                 onBackground="neutral-strong"
-                className="mono-display"
+                className={`mono-display ${styles.statValue}`}
                 // Swaps the number in and keeps whatever the value wraps it in
                 format={(v: number) => stat.value.replace(/\d+/, String(Math.round(v)))}
               />
@@ -95,7 +95,7 @@ export function StatsRow({ stats }: { stats: Stat[] }) {
               <Text
                 variant="display-strong-xs"
                 onBackground="neutral-strong"
-                className="mono-display"
+                className={`mono-display ${styles.statValue}`}
               >
                 {stat.value.replace(/\d+/, "0")}
               </Text>
@@ -104,7 +104,7 @@ export function StatsRow({ stats }: { stats: Stat[] }) {
             <Text
               variant="display-strong-xs"
               onBackground="neutral-strong"
-              className="mono-display"
+              className={`mono-display ${styles.statValue}`}
             >
               {stat.value}
             </Text>

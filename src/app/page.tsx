@@ -15,10 +15,11 @@ import {
 } from "@once-ui-system/core";
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FeatureShowcase } from "@/components/FeatureShowcase";
 import { LyricPreview } from "@/components/LyricPreview";
+import { MobileCollapse } from "@/components/MobileCollapse";
 import { FeatureGrid, StatsRow, StepList } from "@/components/Panels";
 import { ScreenshotSwitcher } from "@/components/ScreenshotSwitcher";
 import { Section, SectionEyebrow, SectionHeading, SectionLead } from "@/components/Section";
@@ -44,7 +45,17 @@ const SWAP_LIFT = 0.4;
 
 export default function HomePage() {
   const [platform, setPlatform] = useState("desktop");
+
+  /*
+   * Open on the tab that matches the device platform <3
+   */
+  useEffect(() => {
+    if (window.matchMedia("(max-width: 768px)").matches) setPlatform("mobile");
+  }, []);
+
   const isDesktop = platform === "desktop";
+  const features = isDesktop ? desktopFeatures : mobileFeatures;
+  const steps = isDesktop ? desktopSteps : mobileSteps;
 
   const platformSwitch = (
     <Segmented
@@ -62,12 +73,12 @@ export default function HomePage() {
       {/* -------------------------------------------------------------- hero */}
       <Column
         id="top"
+        className={styles.hero}
         fillWidth
         horizontal="center"
         paddingX="24"
         paddingTop="160"
         paddingBottom="80"
-        s={{ paddingTop: "128" }}
       >
         <Column maxWidth="m" fillWidth horizontal="center" align="center" gap="0">
           <RevealFx horizontal="center">
@@ -132,27 +143,28 @@ export default function HomePage() {
           </RevealFx>
 
           <RevealFx horizontal="center" delay={0.3}>
+            {/* Android leads and takes the brand fill (mobile friendly) */}
             <Row gap="12" wrap horizontal="center" marginTop="40">
-              <Button
-                href={links.desktopRepo}
-                size="l"
-                data-border="rounded"
-                weight="default"
-                prefixIcon="desktop"
-                arrowIcon
-              >
-                Get it for Desktop
-              </Button>
               <Button
                 href={links.mobileReleases}
                 size="l"
-                variant="secondary"
                 data-border="rounded"
                 weight="default"
                 prefixIcon="android"
                 arrowIcon
               >
                 Get it for Android
+              </Button>
+              <Button
+                href={links.desktopRepo}
+                size="l"
+                variant="secondary"
+                data-border="rounded"
+                weight="default"
+                prefixIcon="desktop"
+                arrowIcon
+              >
+                Get it for Desktop
               </Button>
             </Row>
           </RevealFx>
@@ -226,7 +238,12 @@ export default function HomePage() {
 
         <Flex fillWidth marginTop="32">
           <RevealFx fillWidth key={platform} speed={SWAP_SPEED} translateY={SWAP_LIFT}>
-            <FeatureGrid features={isDesktop ? desktopFeatures : mobileFeatures} />
+            <MobileCollapse
+              title={isDesktop ? "Desktop features" : "Android features"}
+              count={features.length}
+            >
+              <FeatureGrid features={features} />
+            </MobileCollapse>
           </RevealFx>
         </Flex>
       </Section>
@@ -256,7 +273,9 @@ export default function HomePage() {
         >
           <Flex flex={6}>
             <RevealFx fillWidth key={`steps-${platform}`} speed={SWAP_SPEED} translateY={SWAP_LIFT}>
-              <StepList steps={isDesktop ? desktopSteps : mobileSteps} />
+              <MobileCollapse title="Install steps" count={steps.length}>
+                <StepList steps={steps} />
+              </MobileCollapse>
             </RevealFx>
           </Flex>
           <Flex flex={4}>

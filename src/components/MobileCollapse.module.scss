@@ -1,0 +1,21 @@
+
+.shell {
+	background: var(--neutral-background-weak);
+	/* Hairline grids inside match the panel instead of the page */
+	--hairline-cell-bg: var(--neutral-background-weak);
+}
+
+/*
+ * Accordion ships `.accordion:hover { background: var(--neutral-alpha-weak) }`.
+ * Alpha over the solid shell is a fine highlight; the doubled selector just makes
+ * sure nothing here can be knocked back to a see-through fill.
+ */
+.shell .header,
+.shell .header:hover,
+.shell .header:focus-visible {
+	background: transparent;
+}
+
+.shell .header:hover {
+	background: var(--neutral-alpha-weak);
+}

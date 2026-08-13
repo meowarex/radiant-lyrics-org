@@ -1,0 +1,19 @@
+/*
+ * Once stacked, the copy leads (mobile friendly)
+ */
+@media (max-width: 1024px) {
+	.copy {
+		order: -1;
+	}
+
+	/* Responsive gap props are dropped by the library, so the gap lives here too */
+	.row.row {
+		gap: var(--static-space-40);
+	}
+}
+
+@media (max-width: 768px) {
+	.row.row {
+		gap: var(--static-space-24);
+	}
+}

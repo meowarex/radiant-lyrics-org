@@ -26,6 +26,25 @@
 	}
 }
 
+/*
+ * Hero spacing (mobile friendly)
+ */
+@media (max-width: 1024px) {
+	.hero.hero {
+		padding-top: var(--static-space-128);
+		padding-bottom: var(--static-space-48);
+	}
+}
+
+@media (max-width: 768px) {
+	.hero.hero {
+		padding-top: var(--static-space-104);
+		/* Matches a section's 60px so the hero-to-stats gap is the same 120px */
+		padding-bottom: 60px;
+		padding-inline: var(--static-space-16);
+	}
+}
+
 /* Hero pill linking to this site's source */
 .heroPill {
 	text-decoration: none;

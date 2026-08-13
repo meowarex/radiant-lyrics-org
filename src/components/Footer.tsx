@@ -38,7 +38,14 @@ export const Footer = () => {
 
   return (
     <Column as="footer" fillWidth horizontal="center" borderTop="neutral-alpha-weak">
-      <Column maxWidth="l" fillWidth paddingX="24" paddingY="64" gap="48">
+      <Column
+        className={styles.inner}
+        maxWidth="l"
+        fillWidth
+        paddingX="24"
+        paddingY="64"
+        gap="48"
+      >
         <Row fillWidth gap="48" m={{ direction: "column" }} s={{ direction: "column" }}>
           <Column flex={3} gap="16">
             <Row gap="8" vertical="center">
@@ -57,8 +64,9 @@ export const Footer = () => {
             </Text>
           </Column>
 
+          {/* Links collapse on phones (mobile friendly)*/}
           {columns.map((column) => (
-            <Column key={column.title} flex={2} gap="12">
+            <Column key={column.title} flex={2} gap="12" className="s-flex-hide">
               <Text variant="label-strong-s" onBackground="neutral-strong">
                 {column.title}
               </Text>
@@ -84,7 +92,7 @@ export const Footer = () => {
           <Text variant="code-default-xs" onBackground="neutral-weak">
             © {year} meoware.exe — not affiliated with TIDAL
           </Text>
-          <Flex gap="16">
+          <Flex gap="16" className="s-flex-hide">
             <Link
               href={links.github}
               target="_blank"

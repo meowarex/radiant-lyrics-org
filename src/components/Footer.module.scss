@@ -1,3 +1,13 @@
+/*
+ * Reduced to title (mobile friendly)
+ */
+@media (max-width: 768px) {
+	.inner.inner {
+		padding-block: 40px;
+		gap: var(--static-space-24);
+	}
+}
+
 .footerLink {
 	color: var(--neutral-on-background-weak);
 	text-decoration: none;
