@@ -13,8 +13,17 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
+  experimental: {
+    /*
+     * Next fans page-data collection and static generation out across one worker
+     * per CPU — the log showed 5. Each is a full Node process rendering the app,
+     * so on a memory-capped builder that's five heaps at once and the OOM killer
+     * takes the build. There are two routes here; doing them in series costs a
+     * few seconds and removes the spike.
+     */
+    cpus: 1,
+    /* Belt and braces: scale workers to available memory, not just core count */
+    memoryBasedWorkersCount: true,
   },
 };
 
