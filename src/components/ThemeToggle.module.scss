@@ -1,0 +1,14 @@
+/*
+ * Reads as disabled without using the `disabled` attribute — a disabled button
+ * swallows mouse events in most browsers, which would stop the WIP tooltip from
+ * ever firing. aria-disabled + a no-op click gets the same semantics with hover
+ * intact.
+ */
+.wip {
+	opacity: 0.45;
+	cursor: not-allowed !important;
+
+	&:hover {
+		opacity: 0.7;
+	}
+}

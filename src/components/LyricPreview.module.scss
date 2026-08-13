@@ -1,0 +1,325 @@
+/* --- mock lyric panel ---------------------------------------------------- *
+ * Ported from the plugin's styles.css + lyrics-glow.css so each mode behaves the
+ * way it does in TIDAL:
+ *   line     — the whole current line glows
+ *   word     — active word glows, sung words stay lit, upcoming sit at 40%
+ *   syllable — a three-layer background-clip:text wipe with a feathered edge
+ */
+
+/* Height of the segmented control, so the overhang maths stays in one place */
+.shell {
+	--control-h: 40px;
+
+	/* Reserves the half of the control that hangs above the card, so no ancestor
+	   with overflow:hidden (RevealFx animates a transform) can clip it */
+	padding-top: calc(var(--control-h) / 2);
+}
+
+.card {
+	position: relative;
+	/* must stay visible or the top half of the control gets cut off */
+	overflow: visible;
+}
+
+.controlDock {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	transform: translateY(-50%);
+	z-index: 2;
+}
+
+.lyricStage {
+	/* Pinned so a mode switch — which changes how lines wrap — can't resize the card */
+	min-height: 420px;
+	gap: 0;
+}
+
+.lyricLine {
+	--lyric-lit: var(--neutral-on-background-strong);
+	--lyric-dim: color-mix(in srgb, var(--neutral-on-background-strong) 40%, transparent);
+	/* the three knobs — plugin ships 2px inner / 20px outer, bloom is ours */
+	--lyric-glow-inner: 2px;
+	--lyric-glow-outer: 14px;
+	--lyric-glow-bloom: 32px;
+	/* the plugin's --rl-wipe-feather */
+	--wipe-feather: 0.75em;
+	/* the plugin's --rl-line-shift */
+	--line-shift: 20px;
+	/* Adlibs stay subordinate — the sweep runs, but at reduced contrast */
+	--lyric-adlib-lit: color-mix(in srgb, var(--neutral-on-background-strong) 55%, transparent);
+	--lyric-adlib-dim: color-mix(in srgb, var(--neutral-on-background-strong) 20%, transparent);
+
+	font-family: var(--font-heading);
+	font-size: var(--font-size-heading-l);
+	font-weight: var(--font-weight-heading-strong);
+	line-height: 1.3;
+	text-wrap: balance;
+	padding-block: 0.12em;
+	transition:
+		filter 0.4s ease,
+		opacity 0.4s ease,
+		padding 0.4s ease;
+}
+
+/* --- duet positioning ----------------------------------------------------- *
+ * The plugin gives each agent a side and pushes the inactive lines toward the
+ * outer edge, so a conversation reads as two columns rather than one block.
+ */
+
+.singerRight {
+	text-align: end;
+	transform-origin: right;
+}
+
+.singerLeft {
+	text-align: start;
+	transform-origin: left;
+}
+
+/*
+ * Position is keyed on .posHeld rather than the active state, so a line keeps its
+ * forward placement until its adlib has finished — sliding back while the echo is
+ * still on screen drags the adlib along with it.
+ */
+
+/* Single-agent shift: the held line steps in from the left */
+.lyricLine.posHeld {
+	padding-left: var(--line-shift);
+	padding-right: 0;
+}
+
+.singerRight:not(.posHeld) {
+	padding-left: var(--line-shift);
+	padding-right: 0;
+}
+
+.singerRight.posHeld {
+	padding-left: 0;
+	padding-right: var(--line-shift);
+}
+
+/* Duet: 20% column inset, with the same shift layered on top */
+.stageDuet .singerLeft:not(.posHeld) {
+	padding-left: 0;
+	padding-right: calc(20% + var(--line-shift));
+}
+
+.stageDuet .singerLeft.posHeld {
+	padding-left: var(--line-shift);
+	padding-right: 20%;
+}
+
+.stageDuet .singerRight:not(.posHeld) {
+	padding-left: calc(20% + var(--line-shift));
+	padding-right: 0;
+}
+
+.stageDuet .singerRight.posHeld {
+	padding-left: 20%;
+	padding-right: var(--line-shift);
+}
+
+/* --- background vocals ---------------------------------------------------- *
+ * Adlibs fade in under their line and sweep on their own concurrent timing.
+ *
+ * The plugin collapses them with max-height, which reflows everything below and
+ * makes the whole panel breathe in and out. Here the slot is reserved at a fixed
+ * height and only opacity animates, so the stage never changes size — the height
+ * is the sum of the lines plus one reserved slot per adlib, and it's constant.
+ */
+.adlib {
+	--lyric-lit: var(--lyric-adlib-lit);
+	--lyric-dim: var(--lyric-adlib-dim);
+
+	height: 1.35em;
+	padding-top: 0.15em;
+	overflow: visible;
+	opacity: 0;
+	font-size: 0.55em;
+	color: var(--lyric-adlib-dim);
+	white-space: nowrap;
+	transition: opacity 0.5s ease;
+}
+
+/* Driven by the timeline, not by the line's active state — an adlib can outlive it */
+.adlibVisible {
+	opacity: 1;
+}
+
+/* Sweep is over but the next line hasn't started: still readable, no longer lit */
+.adlibSpent {
+	opacity: 0.45;
+}
+
+.singerRight .adlib {
+	text-align: end;
+}
+
+.lyricActive {
+	opacity: 1;
+	filter: none;
+}
+
+/* Colour comes from the token classes now, so distance only controls falloff */
+.lyricInactive {
+	opacity: 0.6;
+	filter: blur(1.4px);
+}
+
+/*
+ * Line is over but its adlib is still sounding, or it's the last thing sung
+ * before the next line picks up. Unsung colour like any inactive line, but held
+ * in focus — no blur, no falloff.
+ */
+.lyricTrailing {
+	opacity: 1;
+	filter: none;
+}
+
+.lyricFar {
+	opacity: 0.35;
+	filter: blur(2.6px);
+}
+
+/* Keeps a word's syllables together while still allowing wrapping between words */
+.word {
+	display: inline-block;
+	margin-inline-end: 0.28em;
+}
+
+/* Already sung — the plugin's .rl-syl-finished: solid, no glow */
+.tokenSung {
+	color: var(--lyric-lit);
+	transition: color 0.25s ease;
+}
+
+/* Being sung — the plugin's .rl-wbw-active, glow from lyrics-glow.css */
+.tokenCurrent {
+	color: var(--lyric-lit);
+	text-shadow:
+		0 0 var(--lyric-glow-inner) var(--lyric-lit),
+		0 0 var(--lyric-glow-outer) var(--lyric-lit),
+		0 0 var(--lyric-glow-bloom) var(--brand-on-background-strong);
+	transition:
+		color 0.15s ease,
+		text-shadow 0.15s ease;
+}
+
+/* Not there yet — the plugin's 0.4-alpha base layer */
+.tokenUpcoming {
+	color: var(--lyric-dim);
+	transition: color 0.25s ease;
+}
+
+/* Syllable sweep, a direct port of the plugin's @keyframes rl-wipe */
+@keyframes lyricWipe {
+	from {
+		background-size:
+			var(--wipe-feather) 100%,
+			0% 100%,
+			100% 100%;
+		background-position:
+			calc(var(--wipe-feather) * -1) 0%,
+			left,
+			left;
+	}
+	to {
+		background-size:
+			var(--wipe-feather) 100%,
+			100% 100%,
+			100% 100%;
+		background-position:
+			calc(100% + var(--wipe-feather)) 0%,
+			left,
+			left;
+	}
+}
+
+/*
+ * .rl-syl-active — three stacked gradients clipped to the glyphs: a travelling
+ * feathered highlight, a solid fill growing in behind it, and the dim base.
+ *
+ * Every syllable — sung, singing, unsung — paints through this same stack, and
+ * only the background sizes differ. Sharing one paint model is what stops the
+ * flicker: swapping a span between `color` and `background-clip: text` changes
+ * how the glyphs are rasterised, so each handover flashed. Now nothing changes
+ * but the gradient geometry, and the sweep runs clean across the line.
+ */
+.syl {
+	color: transparent;
+	-webkit-background-clip: text;
+	background-clip: text;
+	background-repeat: no-repeat;
+	background-image:
+		linear-gradient(90deg, transparent 0%, var(--lyric-lit) 50%, transparent 100%),
+		linear-gradient(90deg, var(--lyric-lit) 100%, transparent 100%),
+		linear-gradient(90deg, var(--lyric-dim), var(--lyric-dim));
+	/* No glow in syllable mode, same as the plugin */
+	text-shadow: none;
+	filter: none;
+}
+
+/*
+ * Not reached yet. The feather is parked a full width off the left rather than
+ * the plugin's half — at half, the gradient's bright centre lands exactly on x=0
+ * and lights the syllable's first glyph before the sweep ever arrives. The plugin
+ * gets away with it because its unsung syllables carry no gradient at all; ours
+ * all share one paint model, so the parking spot has to clear the glyph entirely.
+ */
+.sylUpcoming {
+	background-size:
+		var(--wipe-feather) 100%,
+		0% 100%,
+		100% 100%;
+	background-position:
+		calc(var(--wipe-feather) * -1) 0%,
+		left,
+		left;
+}
+
+/* Being sung — the sweep itself */
+.sylActive {
+	animation: lyricWipe var(--syllable-duration, 210ms) linear forwards;
+}
+
+/* Sung — exactly where the animation leaves off, so the handover is invisible */
+.sylDone {
+	background-size:
+		var(--wipe-feather) 100%,
+		100% 100%,
+		100% 100%;
+	background-position:
+		calc(100% + var(--wipe-feather)) 0%,
+		left,
+		left;
+}
+
+@media (max-width: 768px) {
+	.lyricLine {
+		font-size: var(--font-size-heading-s);
+	}
+
+	.lyricStage {
+		min-height: 340px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.lyricLine,
+	.adlib,
+	.adlibVisible,
+	.tokenSung,
+	.tokenCurrent,
+	.tokenUpcoming {
+		transition: none;
+	}
+
+	/* Land on the finished state rather than sweeping */
+	.sylActive {
+		animation-duration: 1ms;
+	}
+}

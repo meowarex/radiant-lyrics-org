@@ -1,0 +1,10 @@
+.footerLink {
+	color: var(--neutral-on-background-weak);
+	text-decoration: none;
+	width: fit-content;
+	transition: color 0.2s ease;
+
+	&:hover {
+		color: var(--neutral-on-background-strong);
+	}
+}

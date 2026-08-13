@@ -1,0 +1,39 @@
+.header {
+	position: fixed;
+	inset-inline: 0;
+	top: 0;
+	z-index: 20;
+	pointer-events: none;
+}
+
+/*
+ * atomix.one's compact pill — small, only lightly rounded — but transparent until
+ * you scroll, so it floats over the hero instead of sitting in a slab.
+ */
+.pill {
+	pointer-events: auto;
+	border: 1px solid transparent;
+	border-radius: var(--radius-m-nest-4);
+	transition:
+		background 0.3s ease,
+		border-color 0.3s ease,
+		box-shadow 0.3s ease,
+		backdrop-filter 0.3s ease;
+}
+
+.pillScrolled {
+	background: var(--surface-background);
+	border-color: var(--neutral-alpha-weak);
+	box-shadow: var(--shadow-l);
+	backdrop-filter: blur(12px);
+}
+
+/* Dividers belong to the pill, so they arrive and leave with it */
+.divider {
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+.dividerVisible {
+	opacity: 1;
+}

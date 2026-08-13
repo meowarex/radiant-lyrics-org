@@ -1,0 +1,43 @@
+/* Radiant gradient wordmark — violet into the site's pink brand */
+.radiantText {
+	font-family: var(--font-berkeley-mono);
+	background-image: linear-gradient(
+		100deg,
+		var(--brand-on-background-strong) 0%,
+		var(--accent-on-background-strong) 45%,
+		var(--brand-on-background-medium) 100%
+	);
+	background-size: 200% 100%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+	animation: radiantSweep 8s ease-in-out infinite;
+	letter-spacing: -0.04em;
+}
+
+@keyframes radiantSweep {
+	0%,
+	100% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+}
+
+/* Hero pill linking to this site's source */
+.heroPill {
+	text-decoration: none;
+	transition: opacity 0.2s ease;
+
+	&:hover {
+		opacity: 0.8;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.radiantText {
+		animation: none;
+	}
+}

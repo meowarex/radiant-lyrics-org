@@ -1,0 +1,143 @@
+/* Height of the segmented control, so the overhang maths stays in one place */
+.shell {
+	--control-h: 40px;
+
+	/*
+	 * The control straddles the card's top border, so the wrapper reserves exactly
+	 * the half that hangs above. That keeps the overhang inside this element's own
+	 * box — no ancestor with overflow:hidden (RevealFx animates a transform) can
+	 * clip it, and the section below still gets honest layout height.
+	 */
+	padding-top: calc(var(--control-h) / 2);
+}
+
+.card {
+	position: relative;
+	/* must stay visible or the top half of the control gets cut off */
+	overflow: visible;
+	/*
+	 * No extra top padding — the image sits at the same inset as the sides and the
+	 * control's lower half simply occludes it.
+	 */
+}
+
+.controlDock {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	transform: translateY(-50%);
+	z-index: 2;
+}
+
+.viewport {
+	position: relative;
+	width: 100%;
+}
+
+/*
+ * All frames occupy one grid cell and cross-fade, so switching views never
+ * reflows the page and the surrounding layout stays put at any aspect ratio.
+ */
+.stack {
+	display: grid;
+	grid-template-areas: "shot";
+	width: 100%;
+}
+
+.frame {
+	grid-area: shot;
+	opacity: 0;
+	transform: scale(0.995);
+	pointer-events: none;
+	transition:
+		opacity 0.45s ease,
+		transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.frameActive {
+	opacity: 1;
+	transform: scale(1);
+	pointer-events: auto;
+}
+
+/* Click targets over each half of the image, the way Once UI's carousel behaves */
+.zone {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 34%;
+	border: 0;
+	padding: 0;
+	background: transparent;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	opacity: 0;
+	transition: opacity 0.25s ease;
+
+	&:hover,
+	&:focus-visible {
+		opacity: 1;
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--brand-alpha-strong);
+		outline-offset: -4px;
+	}
+}
+
+.zoneLeft {
+	left: 0;
+	justify-content: flex-start;
+	padding-left: var(--static-space-12);
+	background: linear-gradient(to right, rgb(0 0 0 / 0.35), transparent);
+}
+
+.zoneRight {
+	right: 0;
+	justify-content: flex-end;
+	padding-right: var(--static-space-12);
+	background: linear-gradient(to left, rgb(0 0 0 / 0.35), transparent);
+}
+
+.chevron {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 999px;
+	background: rgb(0 0 0 / 0.45);
+	color: #fff;
+	backdrop-filter: blur(6px);
+}
+
+/* Progress pips for the auto-rotating "More" view */
+.pip {
+	width: 18px;
+	height: 3px;
+	border-radius: 999px;
+	background: var(--neutral-alpha-medium);
+	border: 0;
+	padding: 0;
+	cursor: pointer;
+	transition: background 0.3s ease;
+
+	&:hover {
+		background: var(--neutral-alpha-strong);
+	}
+}
+
+.pipActive {
+	background: var(--brand-on-background-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.frame {
+		transition: none;
+		transform: none;
+	}
+}

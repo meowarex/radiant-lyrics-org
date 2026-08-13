@@ -1,0 +1,38 @@
+/*
+ * Terax's hairline grid: one background colour on the wrapper, `gap: 1px` between
+ * opaque cells, so the gaps read as perfectly even dividers with no double borders
+ * at the seams.
+ */
+.hairlineGrid {
+	gap: 1px;
+	background: var(--neutral-alpha-weak);
+	overflow: hidden;
+}
+
+.hairlineCell {
+	background: var(--page-background);
+	transition: background 0.25s ease;
+}
+
+.featureCell:hover {
+	background: var(--neutral-alpha-weak);
+}
+
+.featureCell:hover .featureIcon {
+	color: var(--brand-on-background-strong);
+}
+
+.featureIcon {
+	transition: color 0.25s ease;
+}
+
+.stepNumber {
+	min-width: 32px;
+	height: 32px;
+	border-radius: var(--radius-full);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--brand-alpha-weak);
+	border: 1px solid var(--brand-alpha-medium);
+}

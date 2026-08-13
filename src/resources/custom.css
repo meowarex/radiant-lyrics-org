@@ -1,0 +1,38 @@
+/*
+ * Berkeley Mono for the display type that should read as machine-set — the hero
+ * wordmark and the stat figures. Section headings stay on Geist, which handles
+ * full sentences better than a monospace does.
+ */
+.mono-display {
+  font-family: var(--font-berkeley-mono);
+}
+
+/*
+ * Emphasis inside body copy. The surrounding text sits on a weak foreground, so
+ * weight alone barely registers — lifting the colour is what makes it read.
+ */
+strong {
+  color: var(--neutral-on-background-strong);
+  font-weight: 600;
+}
+
+/* Override global dropdown wrapper background */
+[data-dropdown-wrapper="true"] {
+  background-color: var(--neutral-background-weak) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--neutral-alpha-medium) !important;
+}
+
+/*
+ * Once UI's Card ships `:hover { background-color: var(--neutral-alpha-weak) }`
+ * and an interactive cursor unconditionally — even with no onClick or href. On a
+ * static panel that reads as a phantom button, so this pins the hover state back
+ * to the card's own background.
+ *
+ * Defaults to the surface token; set --static-card-bg on the element if the card
+ * uses a different background.
+ */
+.static-card:hover {
+  background-color: var(--static-card-bg, var(--surface-background)) !important;
+  cursor: default;
+}
