@@ -19,7 +19,7 @@ import styles from "./KawarpBackdrop.module.scss";
 const DEFAULTS = {
   opacity: 75,
   warp: 100,
-  blurPasses: 5,
+  blurPasses: 6,
   speed: 175,
   contrast: 125,
   saturation: 125,
