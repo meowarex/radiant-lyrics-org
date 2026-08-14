@@ -45,9 +45,9 @@ export type Stat = {
 
 export const stats: Stat[] = [
   { value: "Word/Syllable", label: "Lyric Timings" },
+  { value: "Tidaluna", label: "Plugin Ecosystem" },
   { value: "Free!", label: "Yup thats right!" },
-  { value: "40+", label: "Settings", count: 40 },
-  { value: "GitHub", label: "MIT · Open source", href: links.desktopRepo, icon: "github" },
+  { value: "GitHub", label: "GPL 3.0 · Open source", href: links.desktopRepo, icon: "github" },
 ];
 
 export type Bullet = { icon: string; label: string };
