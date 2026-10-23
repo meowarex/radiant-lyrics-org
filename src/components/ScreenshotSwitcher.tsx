@@ -4,8 +4,8 @@ import { Card, Column, Fade, Flex, Icon, Media, Row, Text } from "@once-ui-syste
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { screenshotAspect, screenshots } from "@/resources";
-import { Segmented } from "./Segmented";
 import styles from "./ScreenshotSwitcher.module.scss";
+import { Segmented } from "./Segmented";
 
 /** How long an auto-rotating shot holds before advancing. */
 const ROTATE_MS = 4200;
@@ -89,7 +89,7 @@ export function ScreenshotSwitcher() {
       >
         {/* Straddles the card's top border, half above it and half below */}
         <div className={styles.controlDock}>
-          <Segmented selected={active.group} buttons={views} onToggle={onToggle} />
+          <Segmented value={active.group} buttons={views} onChange={onToggle} />
         </div>
 
         <Column fillWidth className={styles.viewport} radius="l" overflow="hidden">
@@ -116,8 +116,6 @@ export function ScreenshotSwitcher() {
 
           {/*
             Melts the bottom edge of the shot into the card instead of cutting it.
-            Now Playing gets a much shallower, unblurred version — the player bar
-            lives right on that edge and the full fade washed it out.
           */}
           <Fade
             base="surface"
@@ -127,7 +125,6 @@ export function ScreenshotSwitcher() {
             left="0"
             fillWidth
             height={subtleFade ? "16" : "64"}
-            blur={subtleFade ? 0 : undefined}
             pointerEvents="none"
             zIndex={1}
           />

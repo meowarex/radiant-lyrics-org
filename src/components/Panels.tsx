@@ -73,7 +73,7 @@ export function StatsRow({ stats }: { stats: Stat[] }) {
               arrowIcon
             >
               {/* speed is the cycle duration in seconds; baseOpacity keeps it readable */}
-              <ShineFx speed={2.5} baseOpacity={0.55}>
+              <ShineFx speed={2500} baseOpacity={0.55}>
                 {stat.value}
               </ShineFx>
             </Button>

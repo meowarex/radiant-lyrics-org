@@ -36,7 +36,7 @@ const KAWARP_OPTIONS = {
   saturation: DEFAULTS.saturation / 100,
   dithering: DEFAULTS.dithering / 1000,
   scale: DEFAULTS.scale / 100,
-};/**
+}; /**
  * The plugin's performance mode (mobile friendly)
  */
 const PERFORMANCE_OPTIONS = {

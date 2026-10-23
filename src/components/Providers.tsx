@@ -3,14 +3,11 @@
 import {
   DataThemeProvider,
   IconProvider,
-  LayoutProvider,
   ThemeProvider,
   ToastProvider,
 } from "@once-ui-system/core";
 import type {
   BorderStyle,
-  ChartMode,
-  ChartVariant,
   NeutralColor,
   ScalingSize,
   Schemes,
@@ -20,8 +17,10 @@ import type {
   Theme,
   TransitionStyle,
 } from "@once-ui-system/core";
-import { style, dataStyle } from "../resources/once-ui.config";
+import type { ChartMode, ChartVariant } from "@once-ui-system/core/data";
+import { LayoutProvider } from "@once-ui-system/core/next";
 import { iconLibrary } from "../resources/icons";
+import { dataStyle, style } from "../resources/once-ui.config";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (

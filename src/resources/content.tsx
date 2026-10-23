@@ -2,6 +2,8 @@
 
 import type { ReactNode } from "react";
 
+import type { IconName } from "./icons";
+
 export const RADIANT = "#9966cc";
 
 export const site = {
@@ -39,7 +41,7 @@ export type Stat = {
   value: string;
   label: string;
   href?: string;
-  icon?: string;
+  icon?: IconName;
   count?: number;
 };
 
@@ -50,7 +52,7 @@ export const stats: Stat[] = [
   { value: "GitHub", label: "GPL 3.0 · Open source", href: links.desktopRepo, icon: "github" },
 ];
 
-export type Bullet = { icon: string; label: string };
+export type Bullet = { icon: IconName; label: string };
 
 export type Showcase = {
   id: string;
@@ -160,7 +162,7 @@ export const screenshots: ShotGroup[] = [
   },
 ];
 
-export type Feature = { icon: string; title: string; desc: string };
+export type Feature = { icon: IconName; title: string; desc: string };
 
 export const desktopFeatures: Feature[] = [
   {

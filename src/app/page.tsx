@@ -9,8 +9,8 @@ import {
   HoloFx,
   Icon,
   LetterFx,
-  Row,
   RevealFx,
+  Row,
   Text,
 } from "@once-ui-system/core";
 import Link from "next/link";
@@ -21,6 +21,7 @@ import { FeatureShowcase } from "@/components/FeatureShowcase";
 import { LyricPreview } from "@/components/LyricPreview";
 import { MobileCollapse } from "@/components/MobileCollapse";
 import { FeatureGrid, StatsRow, StepList } from "@/components/Panels";
+import { PromoVideo } from "@/components/PromoVideo";
 import { ScreenshotSwitcher } from "@/components/ScreenshotSwitcher";
 import { Section, SectionEyebrow, SectionHeading, SectionLead } from "@/components/Section";
 import { Segmented } from "@/components/Segmented";
@@ -62,8 +63,8 @@ export default function HomePage() {
 
   const platformSwitch = (
     <Segmented
-      selected={platform}
-      onToggle={setPlatform}
+      value={platform}
+      onChange={setPlatform}
       buttons={[
         { value: "desktop", label: "Desktop", prefixIcon: "desktop" },
         { value: "mobile", label: "Android", prefixIcon: "android" },
@@ -131,7 +132,7 @@ export default function HomePage() {
             </LetterFx>
           </Heading>
 
-          <RevealFx horizontal="center" delay={0.2}>
+          <RevealFx horizontal="center" delay={200}>
             <Text
               variant="heading-default-l"
               onBackground="neutral-weak"
@@ -145,7 +146,7 @@ export default function HomePage() {
             </Text>
           </RevealFx>
 
-          <RevealFx horizontal="center" delay={0.3}>
+          <RevealFx horizontal="center" delay={300}>
             {/* Android leads and takes the brand fill (mobile friendly) */}
             <Row gap="12" wrap horizontal="center" marginTop="40">
               <Button
@@ -173,7 +174,7 @@ export default function HomePage() {
             </Row>
           </RevealFx>
 
-          <RevealFx horizontal="center" delay={0.4}>
+          <RevealFx horizontal="center" delay={400}>
             <Row gap="12" vertical="center" marginTop="32" wrap horizontal="center">
               {["Windows", "macOS", "Linux", "Android"].map((platformName, index) => (
                 <Row key={platformName} gap="12" vertical="center">
@@ -199,7 +200,7 @@ export default function HomePage() {
             </Row>
           </RevealFx>
 
-          <RevealFx horizontal="center" delay={0.5}>
+          <RevealFx horizontal="center" delay={500}>
             <Row gap="8" vertical="center" marginTop="24">
               <Text variant="code-default-s" onBackground="neutral-weak" wrap="balance">
                 {"// the backdrop behind this page is the real shader <3"}
@@ -216,7 +217,12 @@ export default function HomePage() {
         </RevealFx>
       </Section>
 
-      {/* --------------------------------------------------------- showcases */}
+      {/* promo */}
+      <Section id="video" paddingY="0">
+        <PromoVideo />
+      </Section>
+
+      {/* showcases */}
       <Section>
         <FeatureShowcase showcase={showcases[0]} visual={<LyricPreview />} />
       </Section>
