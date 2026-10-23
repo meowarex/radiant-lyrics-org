@@ -1,5 +1,5 @@
 // Used for SEO in meta tags and schema
-const baseURL = "https://radiantlyrics.org";
+const baseURL = "https://radiant-lyrics.org";
 
 // Import and set font for each variant
 import { Geist } from "next/font/google";
@@ -117,8 +117,8 @@ const meta = {
     title: "Radiant Lyrics",
     // Matches the hero lead, so the embed reads the same as the page
     description:
-      "Radiant and beautiful overhaul of the TIDAL UI, From Syllable Lyrics & Glow to fancy Shaders.",
-    image: "/images/og/home.png",
+      "Radiant and beautiful overhaul of the TIDAL UI for Desktop & Android!",
+    image: "/images/og/embed.png",
     canonical: baseURL,
     robots: "index,follow",
     alternates: [{ href: baseURL, hrefLang: "en" }],
