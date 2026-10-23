@@ -1,62 +1,62 @@
 import React from "react";
-import type { IconType, IconBaseProps } from "react-icons";
+import type { IconBaseProps, IconType } from "react-icons";
 
 import {
-  HiArrowUpRight,
-  HiOutlineLink,
-  HiArrowTopRightOnSquare,
-  HiEnvelope,
-  HiCalendarDays,
   HiArrowRight,
-  HiOutlineEye,
-  HiOutlineEyeSlash,
-  HiOutlineDocument,
-  HiOutlineGlobeAsiaAustralia,
-  HiOutlineRocketLaunch,
-  HiCodeBracketSquare,
-  HiCodeBracket,
-  HiMiniCodeBracketSquare,
-  HiMiniCodeBracket,
-  HiOutlineSparkles,
-  HiOutlineSwatch,
-  HiOutlineMusicalNote,
-  HiOutlineLanguage,
-  HiOutlineBolt,
-  HiOutlineAdjustmentsHorizontal,
-  HiOutlineDevicePhoneMobile,
-  HiOutlineComputerDesktop,
-  HiOutlineArrowDownTray,
-  HiOutlineCursorArrowRays,
-  HiOutlineSquares2X2,
-  HiOutlinePlayCircle,
-  HiOutlineHandRaised,
-  HiOutlineShieldExclamation,
-  HiOutlineHeart,
+  HiArrowTopRightOnSquare,
+  HiArrowUpRight,
+  HiCalendarDays,
   HiChevronLeft,
   HiChevronRight,
+  HiCodeBracket,
+  HiCodeBracketSquare,
+  HiEnvelope,
+  HiMiniCodeBracket,
+  HiMiniCodeBracketSquare,
+  HiOutlineAdjustmentsHorizontal,
+  HiOutlineArrowDownTray,
+  HiOutlineBolt,
+  HiOutlineComputerDesktop,
   HiOutlineCpuChip,
-  HiOutlineSun,
+  HiOutlineCursorArrowRays,
+  HiOutlineDevicePhoneMobile,
+  HiOutlineDocument,
+  HiOutlineEye,
+  HiOutlineEyeSlash,
+  HiOutlineGlobeAsiaAustralia,
+  HiOutlineHandRaised,
+  HiOutlineHeart,
+  HiOutlineLanguage,
+  HiOutlineLink,
   HiOutlineMoon,
+  HiOutlineMusicalNote,
+  HiOutlinePlayCircle,
+  HiOutlineRocketLaunch,
+  HiOutlineShieldExclamation,
+  HiOutlineSparkles,
+  HiOutlineSquares2X2,
+  HiOutlineSun,
+  HiOutlineSwatch,
 } from "react-icons/hi2";
 
 import {
-  PiHouseDuotone,
-  PiUserCircleDuotone,
-  PiGridFourDuotone,
   PiBookBookmarkDuotone,
+  PiGridFourDuotone,
+  PiHouseDuotone,
   PiImageDuotone,
+  PiUserCircleDuotone,
 } from "react-icons/pi";
 
 import {
+  FaAndroid,
+  FaApple,
   FaDiscord,
   FaGithub,
   FaLinkedin,
-  FaX,
+  FaLinux,
   FaThreads,
   FaWindows,
-  FaAndroid,
-  FaApple,
-  FaLinux,
+  FaX,
 } from "react-icons/fa6";
 
 // Lucide's stroke-outline marks, matching the icon style Terax uses
@@ -141,3 +141,8 @@ export const iconLibrary: Record<string, IconType> = {
 
 export type IconLibrary = typeof iconLibrary;
 export type IconName = keyof IconLibrary;
+
+// Once UI types icon names as a union; register ours so `name="github"` compiles
+declare module "@once-ui-system/core" {
+  interface IconLibraryOverrides extends Record<IconName, true> {}
+}

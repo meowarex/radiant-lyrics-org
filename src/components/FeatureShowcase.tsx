@@ -61,7 +61,7 @@ export function FeatureShowcase({
 
   const media = (
     <Flex flex={6} key="media">
-      <RevealFx fillWidth delay={0.1} translateY={0.75}>
+      <RevealFx fillWidth delay={100} translateY={0.75}>
         {visual}
       </RevealFx>
     </Flex>

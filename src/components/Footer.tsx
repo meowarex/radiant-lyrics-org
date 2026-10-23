@@ -38,14 +38,7 @@ export const Footer = () => {
 
   return (
     <Column as="footer" fillWidth horizontal="center" borderTop="neutral-alpha-weak">
-      <Column
-        className={styles.inner}
-        maxWidth="l"
-        fillWidth
-        paddingX="24"
-        paddingY="64"
-        gap="48"
-      >
+      <Column className={styles.inner} maxWidth="l" fillWidth paddingX="24" paddingY="64" gap="48">
         <Row fillWidth gap="48" m={{ direction: "column" }} s={{ direction: "column" }}>
           <Column flex={3} gap="16">
             <Row gap="8" vertical="center">
@@ -59,8 +52,7 @@ export const Footer = () => {
               onBackground="neutral-weak"
               style={{ maxWidth: "22rem" }}
             >
-              Built on TidaLuna by Inrixia, inspired by beautiful-lyrics from
-              surfbryce.
+              Built on TidaLuna by Inrixia, inspired by beautiful-lyrics from surfbryce.
             </Text>
           </Column>
 

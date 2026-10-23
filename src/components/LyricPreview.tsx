@@ -166,14 +166,12 @@ function buildTimeline(mode: string) {
       lines.forEach((l, i) => {
         if (at >= l.end) hold = i;
       });
+      const adlib = adlibLine >= 0 ? lines[adlibLine].adlib : undefined;
       return {
         at,
         line,
         unit: line >= 0 ? Math.floor((at - lines[line].start) / tempo) : 0,
-        adlibUnit:
-          adlibLine >= 0
-            ? Math.floor((at - lines[adlibLine].adlib!.start) / lines[adlibLine].adlib!.step)
-            : 0,
+        adlibUnit: adlib ? Math.floor((at - adlib.start) / adlib.step) : 0,
         adlibLine,
         hold,
       };
@@ -223,13 +221,11 @@ function SungText({ tokens, mode, unit }: { tokens: Tokens; mode: string; unit: 
         }
         return (
           <span key={key} className={styles.word}>
-            {word.map((syllable, syllableIndex) => {
+            {word.map((syllable) => {
               const position = index++;
+              // The lyrics are static, so a syllable's place in the line is a stable key
               return (
-                <span
-                  key={`${syllable}-${syllableIndex}`}
-                  className={tokenClass(position, unit, mode)}
-                >
+                <span key={position} className={tokenClass(position, unit, mode)}>
                   {syllable}
                 </span>
               );
@@ -250,9 +246,11 @@ export function LyricPreview() {
   const timeline = useMemo(() => buildTimeline(mode), [mode]);
   const [frameIndex, setFrameIndex] = useState(0);
 
-  useEffect(() => {
+  // Each mode has its own timeline, so switching restarts it from the top
+  const changeMode = (value: string) => {
+    setMode(value);
     setFrameIndex(0);
-  }, [timeline]);
+  };
 
   useEffect(() => {
     const { frames, total } = timeline;
@@ -281,14 +279,13 @@ export function LyricPreview() {
       >
         {/* Straddles the card's top border, half above it and half below */}
         <div className={styles.controlDock}>
-          <Segmented selected={mode} buttons={lyricModes} onToggle={setMode} />
+          <Segmented value={mode} buttons={lyricModes} onChange={changeMode} />
         </div>
 
         <Column
           fillWidth
           fillHeight
           padding="32"
-          s={{ padding: "20" }}
           vertical="center"
           className={`${styles.lyricStage} ${isDuet ? styles.stageDuet : ""}`}
           // Sweep finishes exactly as the token hands over to the next one

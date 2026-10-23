@@ -6,13 +6,13 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "biome lint src",
     "typecheck": "tsc --noEmit",
     "biome-write": "npx @biomejs/biome format --write ."
   },
   "dependencies": {
     "@kawarp/core": "^1.2.0",
-    "@once-ui-system/core": "^1.8.2",
+    "@once-ui-system/core": "^2.5.0",
     "classnames": "^2.5.1",
     "next": "^16.3.0",
     "react": "^19.0.0",
