@@ -13,6 +13,11 @@ import { baseURL, dataStyle, fonts, homeMeta, style } from "@/resources";
 import { berkeleyMono } from "@/resources/berkeley-mono";
 import { Column, Flex, Meta, Schema } from "@once-ui-system/core";
 
+// Discord uses theme-color as the embed's accent bar
+export const viewport = {
+  themeColor: "#ff4fa3",
+};
+
 export async function generateMetadata() {
   return Meta.generate({
     title: homeMeta.home.title,
